@@ -10,7 +10,7 @@ class TestSmoke:
     @pytest.mark.smoke
     def test_api_is_reachable(self, api, base_url):
         """Verify the dev API responds at all."""
-        response = api.get(f"{base_url}/public/p2/v2/consumer", 
+        response = api.get(f"{base_url}/api/public/p2/v2/consumer", 
                           params={"page": 0, "size": 1})
         assert response.status_code != 503, "API is down (503)"
         assert response.status_code != 404, "API endpoint not found (404)"
@@ -19,7 +19,7 @@ class TestSmoke:
     @pytest.mark.smoke
     def test_auth_token_is_valid(self, api, base_url):
         """Verify Bearer token is accepted (not expired)."""
-        response = api.get(f"{base_url}/public/p2/v2/consumer",
+        response = api.get(f"{base_url}/api/public/p2/v2/consumer",
                           params={"page": 0, "size": 1})
         assert response.status_code != 401, \
             "Token is invalid or expired — update BEARER_TOKEN in .env"
@@ -30,7 +30,7 @@ class TestSmoke:
     @pytest.mark.smoke
     def test_api_returns_json(self, api, base_url):
         """Verify API returns valid JSON response."""
-        response = api.get(f"{base_url}/public/p2/v2/consumer",
+        response = api.get(f"{base_url}/api/public/p2/v2/consumer",
                           params={"page": 0, "size": 1})
         assert response.status_code == 200, \
             f"Expected 200, got {response.status_code}: {response.text}"
@@ -42,7 +42,7 @@ class TestSmoke:
     @pytest.mark.smoke  
     def test_response_has_pagination(self, api, base_url):
         """Verify paginated response structure."""
-        response = api.get(f"{base_url}/public/p2/v2/consumer",
+        response = api.get(f"{base_url}/api/public/p2/v2/consumer",
                           params={"page": 0, "size": 1})
         assert response.status_code == 200
 
